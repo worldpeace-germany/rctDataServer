@@ -1,6 +1,6 @@
 # Introduction
 
-The data logger for RCT inverters was developed to the inverter data available not only in the mobile app provided by RCT but also in an own smart home solution. From this Github page you only need the latest jar file rctDataServer-<version>.jar, download the file with the highest version number. The application was developed in Java and should therefore run on Windows, Linux and MacOS. The jar file can be saved somewhere on the hard disk.
+The data logger for RCT inverters was developed to the inverter data available not only in the mobile app provided by RCT but also in an own smart home solution. From this Github page you only need the latest jar file rctDataServer-<version>.jar, download the file with the highest version number (to be found in release folder). The application was developed in Java and should therefore run on Windows, Linux and MacOS. The jar file can be saved somewhere on the hard disk.
 
 # Requirements
 ## Java
