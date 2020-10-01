@@ -1,6 +1,6 @@
 # Einleitung
 
-Der Daten Logger für RCT Wechselrichter wurde entwickelt um die Daten nicht nur in der von RCT bereitgestellten mobilen App zur Verfügung zu haben sondern auch in eigenen Smart Home Lösungen zur Verfügung zu haben. Von dieser Github Seite braucht ihr nur die neuste jar Datei rctDataServer-<version>.jar ladet die Datei  mit der höchsten Versionsnummer herunter. Die Anwendung wurde in Java entwickelt und sollte daher unter Windows, Linux und MacOS laufen. Diese jar Datei kann irgendwo auf der Festplatte abgespeichert werden.
+Der Daten Logger für RCT Wechselrichter wurde entwickelt um die Daten nicht nur in der von RCT bereitgestellten mobilen App zur Verfügung zu haben sondern auch in eigenen Smart Home Lösungen zur Verfügung zu haben. Von dieser Github Seite braucht ihr nur die neuste jar Datei rctDataServer-<version>.jar ladet die Datei  mit der höchsten Versionsnummer herunter (siehe Verzeichnis release). Die Anwendung wurde in Java entwickelt und sollte daher unter Windows, Linux und MacOS laufen. Diese jar Datei kann irgendwo auf der Festplatte abgespeichert werden.
 
 # Voraussetzungen
 ## Java
