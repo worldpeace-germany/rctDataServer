@@ -57,7 +57,9 @@ Hauptsächlich wurde das Tool gebaut um die Daten in einer Influx DB zu speicher
 influxdbServer = localhost
 influxdbPort = 8086
 ```
-Der Servername und der Serverport müssen gemäß der Influx Installation natürlich angepasst werden. Standardmäßig wird jede Minute ein Messwert angefordert und in der InfluxDB gespeichert.
+Der Servername und der Serverport müssen gemäß der Influx Installation natürlich angepasst werden. Standardmäßig wird jede Minute ein Messwert angefordert und in der InfluxDB gespeichert. Ein mögliches Beispiel eines Grafana Dashboards könnte beispielsweise wie folgt aussehen:
+
+![Screenshot Grafana](images/Grafana_Screenshot.png)
 
 ## Technischer Test
 Eine weitere Möglichkeit Daten abzurufen ist es über einen Browser bestimmte Werte abzufragen. Im wesentlichen ist das eine gute Möglichkeit zu testen ob die Anwendung grundsätzlich läuft. Ansonsten kann man diese http Schnittstelle auch nutzen wenn man die Daten in eigenen Anwendungen integrieren will.
