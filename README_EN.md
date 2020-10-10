@@ -57,7 +57,9 @@ Mainly the tool was built to store the data in an Influx DB. The data of the Inf
 influxdbServer = localhost
 influxdbPort = 8086
 ```
-The server name and the server port have to be adjusted according to the Influx installation. By default a measurement value is requested every minute and stored in the InfluxDB.
+The server name and the server port have to be adjusted according to the Influx installation. By default a measurement value is requested every minute and stored in the InfluxDB. A Grafana dashboard might look like as in the following example:
+
+![Screenshot Grafana](images/Grafana_Screenshot.png)
 
 ## Technical test
 Another way to retrieve data is to use a browser to request certain values. Basically this is a good way to test if the application is running. Otherwise you can also use this http interface if you want to integrate the data into your own applications.
