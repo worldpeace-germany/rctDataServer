@@ -159,10 +159,9 @@ public class Inverter
 		{
 			inputString = inputString.substring(2, inputString.length()); // remove the first start trigger 2B before splitting
 		}	
-		else if((inputString.substring(0, 4).equalsIgnoreCase("002B")))
+		else if((inputString.substring(0, 4).equalsIgnoreCase("002B"))) //It seems that newer revisions of the inverter stream starts with 002B
 		{
 			inputString = inputString.substring(4, inputString.length()); // remove the first start trigger 002B before splitting
-			logger.warn("<<<<< DEBUG >>>>> Inverter::split2B TCP stream starts with 002B");
 		}
 		else
 		{
