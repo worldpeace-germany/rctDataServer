@@ -51,93 +51,88 @@ public class RequestData {
     		byte[] requestBytes = null; //Byte array to be sent to inverter
     		if(!(magicNumber == null || magicNumber.equalsIgnoreCase("") ))
         	{
-		    	if(Constants.keyDescriptionMapNumber.containsKey(magicNumber))
+    			if(Constants.magicNumberObjectMap.containsKey(magicNumber))
+		    	//if(Constants.keyDescriptionMapNumber.containsKey(magicNumber))
 		        {
 		    		Constants.magicNumberObjectMap.get(magicNumber).setDataReady(false);
-		    		requestBytes = Helper.buildRequestByteArrayDataLoggerShort(magicNumber);
-		    		sendRequestToInverter(requestBytes); //finally communicate with inverter
-		        }
-		    	else if(Constants.keyDescriptionMapArray.containsKey(magicNumber))
-			    {
-		    		if (request.getParameterMap().containsKey("timestamp")) 
-		        	{
-		    			try
-		    			{
-		    			Long upToDate = Long.decode(request.getParameter("timestamp"));
-		    			if(upToDate > 9999999999L)	//timestamp obviously given in ms, but need s for RCT (10 digits for s, 13 digits for ms)
-		    			{
-		    				upToDate = upToDate / 1000;
-		    			}
-			    			if(!( upToDate == null || upToDate == 0L))
-			            	{
-			    	    		Constants.magicNumberObjectMap.get(magicNumber).setDataReady(false);
-			    				requestBytes = Helper.buildRequestByteArrayDataLogger(magicNumber, upToDate);
-			    				sendRequestToInverter(requestBytes); //finally communicate with inverter
-			            	}
-			    			else
+		    		
+		    		if(Constants.magicNumberObjectMap.get(magicNumber).getDataType().equalsIgnoreCase("short"))
+		    		{
+			    		requestBytes = Helper.buildRequestByteArrayDataLoggerShort(magicNumber);
+			    		sendRequestToInverter(requestBytes); //finally communicate with inverter
+		    		}
+		    		else if(Constants.magicNumberObjectMap.get(magicNumber).getDataType().equalsIgnoreCase("long"))
+		    		{
+			    		if (request.getParameterMap().containsKey("timestamp")) 
+			        	{
+			    			try
 			    			{
-			            		logger.error("<<<<< ERROR >>>>> RequestData::getRctData: Received a bad request. No timestamp given, but compulsory for array (long) requests. Magic number: " + magicNumber);
+			    			Long upToDate = Long.decode(request.getParameter("timestamp"));
+			    			if(upToDate > 9999999999L)	//timestamp obviously given in ms, but need s for RCT (10 digits for s, 13 digits for ms)
+			    			{
+			    				upToDate = upToDate / 1000;
+			    			}
+				    			if(!( upToDate == null || upToDate == 0L))
+				            	{
+				    	    		Constants.magicNumberObjectMap.get(magicNumber).setDataReady(false);
+				    				requestBytes = Helper.buildRequestByteArrayDataLogger(magicNumber, upToDate);
+				    				sendRequestToInverter(requestBytes); //finally communicate with inverter
+				            	}
+				    			else
+				    			{
+				            		logger.error("<<<<< ERROR >>>>> RequestData::getRctData: Received a bad request! Timestamp given but either 0 or null. Magic number: " + magicNumber);
+				            		responseCode = HttpServletResponse.SC_BAD_REQUEST;
+				            		
+				            		JsonObject responseContent = new JsonObject();
+				            		responseContent.addProperty("status", "error");
+				            		responseContent.addProperty("text", "Received bad request! No valid timestamp given for array (long) requests. Magic number: " + magicNumber);
+				            		content = responseContent.toString();
+				    			}
+			    			}
+			    			catch(NumberFormatException e)
+			    			{
+			            		logger.error("<<<<< ERROR >>>>> RequestData::getRctData: Received a bad request. Timestamp {} is not a number. Magic number: {}." , request.getParameter("timestamp"), magicNumber);
 			            		responseCode = HttpServletResponse.SC_BAD_REQUEST;
 			            		
 			            		JsonObject responseContent = new JsonObject();
 			            		responseContent.addProperty("status", "error");
-			            		responseContent.addProperty("text", "Received bad request, no timestamp given for array (long) requests. Magic number: " + magicNumber);
+			            		responseContent.addProperty("text", "Received a bad request. Value for timestamp is not a number.");
 			            		content = responseContent.toString();
 			    			}
-		    			}
-		    			catch(NumberFormatException e)
-		    			{
-		            		logger.error("<<<<< ERROR >>>>> RequestData::getRctData: Received a bad request. Timestamp {} is not a number. Magic number: {}." , request.getParameter("timestamp"), magicNumber);
-		            		responseCode = HttpServletResponse.SC_BAD_REQUEST;
-		            		
-		            		JsonObject responseContent = new JsonObject();
-		            		responseContent.addProperty("status", "error");
-		            		responseContent.addProperty("text", "Received a bad request. Value for timestamp is not a number.");
-		            		content = responseContent.toString();
-		    			}
 
-		        	}
-		    		else
+			        	}
+			    		else
+			    		{
+				    		logger.error("<<<<< WARN >>>>> RequestData::getRctData: Received a bad request! Request for long data needs to have a timestamp, no timestamp given. Magic number: {}", magicNumber);
+				    		responseCode = HttpServletResponse.SC_BAD_REQUEST;
+				    		
+				    		JsonObject responseContent = new JsonObject();
+				    		responseContent.addProperty("status", "error");
+				    		responseContent.addProperty("text", "Received bad request, request for long data needs to have a timestamp, no timestamp given. Magic number: " + magicNumber);
+				    		content = responseContent.toString();
+			    		}
+		    		}
+		    		else if(Constants.magicNumberObjectMap.get(magicNumber).getDataType().equalsIgnoreCase("string"))
 		    		{
-			    		logger.error("<<<<< WARN >>>>> RequestData::getRctData: Received a bad request. Request for long data needs to have a timestamp, no timestamp given. Magic number: {}", magicNumber);
+			    		logger.warn("<<<<< WARN >>>>> RequestData::getRctData: Received a request for string data. Not yet implemented.");
 			    		responseCode = HttpServletResponse.SC_BAD_REQUEST;
 			    		
 			    		JsonObject responseContent = new JsonObject();
 			    		responseContent.addProperty("status", "error");
-			    		responseContent.addProperty("text", "Received bad request, request for long data needs to have a timestamp, no timestamp given. Magic number: " + magicNumber);
+			    		responseContent.addProperty("text", "Received a request for string data. Not yet implemented. Magic number " + magicNumber);
 			    		content = responseContent.toString();
 		    		}
-			    }
-		    	else if(Arrays.asList(Constants.unknownMagicNumbers).contains(magicNumber))
-		        {
-		    		logger.warn("<<<<< WARN >>>>> RequestData::getRctData: Received a bad request. Magic number in list of unknown magic numbers.");
+		        }
+    			else
+    			{
+		    		logger.warn("<<<<< WARN >>>>> RequestData::getRctData: Received a bad request. Magic number not listed in CSV.");
 		    		responseCode = HttpServletResponse.SC_BAD_REQUEST;
 		    		
 		    		JsonObject responseContent = new JsonObject();
 		    		responseContent.addProperty("status", "error");
 		    		responseContent.addProperty("text", "Received bad request, unknown magic number requested: " + magicNumber);
 		    		content = responseContent.toString();
-		        }
-		        else if(Constants.keyDescriptionMapString.containsKey(magicNumber))
-		        {
-		    		logger.warn("<<<<< WARN >>>>> RequestData::getRctData: Received a request for string data. Not yet implemented.");
-		    		responseCode = HttpServletResponse.SC_BAD_REQUEST;
-		    		
-		    		JsonObject responseContent = new JsonObject();
-		    		responseContent.addProperty("status", "error");
-		    		responseContent.addProperty("text", "Received a request for string data. Not yet implemented. Magic number " + magicNumber);
-		    		content = responseContent.toString();
-		        }
-		        else
-		        {
-		    		logger.warn("<<<<< WARN >>>>> RequestData::getRctData: Received a bad request. Unknown magic number in request specified.");
-		    		responseCode = HttpServletResponse.SC_BAD_REQUEST;
-		    		
-		    		JsonObject responseContent = new JsonObject();
-		    		responseContent.addProperty("status", "error");
-		    		responseContent.addProperty("text", "Received bad request, unknown magic number requested: " + magicNumber);
-		    		content = responseContent.toString();
-		        }
+    			}	
         	}
     		else
     		{

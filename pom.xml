@@ -7,7 +7,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.opensource.rct</groupId>
   <artifactId>rctDataServer</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <name>RCT Data Server</name>
   <description>Server to read data from RCT Inverter</description>
   

@@ -22,10 +22,10 @@ The minimal content of the file should look like this:
 ```
 hostnameInverter = 1.1.1.1
 portInverter = 8899
-logLevel = debug
+logLevel = info
 timeoutInverter = 3000
 ```
-Attention, you have to adjust the first value and enter the IP address of your inverter. You might also have to change the second parameter, 8899 is the default port of the inverter. Hence, if you are not aware that you changed it, then please leave it as it is.
+Attention, you have to adjust the first value and enter the IP address of your inverter. You might also have to change the second parameter, 8899 is the default port of the inverter. Hence, if you are not aware that you changed it, then please leave it as it is. The parameter timeoutInverter describes after how many ms it is not being waited anymore for a response from the inverter. For unknown reasons the inverter does not always seem to respond, it happens rarely but should not block the further process. If you see a lot of timeout messages in the log you could increase the value a bit. The parameter logLevel uses the usual values. Most important are _error_, _info_ and _debug_. In production use error to initially see what happens info and debug for development problems.
 
 Optionally you can enter the following parameters
 

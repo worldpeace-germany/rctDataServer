@@ -20,7 +20,7 @@ e.g.
 ```
 1AC87AA0;Current house power usage in W;short;rctdb;PowerHouse
 ```
-The first entry gives the magic number value, a 4 byte value represented as an 8 character string. Then a description explaining the value. The third column specifies if the response from the inverter will be long or short. The last two entries are only in use if you use an Influx DB to store your data, the fourth entry specifies in what DB the time series will be written to and the last entry is the key in the Influx DB.
+The first entry gives the magic number value, a 4 byte value represented as an 8 character string. Then a description explaining the value. The third column specifies if the response from the inverter will be long, short, string or unknown. Currently only responses of type short or long are implemented. A type can be of value unknown if the magic number is unknown and the stream should be ignored. It is for future use in case new magic numbers are being observed but cannot be explained for the time being. The last two entries are only in use if you use an Influx DB to store your data, the fourth entry specifies in what DB the time series will be written to and the last entry is the key in the Influx DB. If you look into the CSV file you will see lots of entries where no <Influx key> is specified. These entries are not stored in Influx, if you would like to store a different set of keys in your DB then add or remove keys in that column. Please be aware that you need to recompile the project afterwards.
 
 # REST Interface
 The application offers a REST interface to communicate with the inverter. The communication with the inverter itself is based on a proprietary TCP/IP protocol. The provided REST interface should make it easier to integrate the inverter into an own application. Basically two servlet classes are being provided.
@@ -53,3 +53,4 @@ Another option is to request *all* data, make sure to understand *all* in this c
 GET http://<IP of server>:8080/getAllData
 ```
 Keep in mind as well the way the communication with the inverter takes place (see at the top of this guide). Since a response from the inverter is being sent to all connected clients it might happen that you see data in the getAllData call which you never have requested, but some other client (e.g. mobile app) might have done.
+

@@ -348,77 +348,84 @@ public class Inverter
 				logger.error("<<<<< ERROR >>>>> Inverter::processResultString Non existing response type, this shouldn't happen. Received type " + responseType);
 			}
 			
-	        if(Constants.keyDescriptionMapNumber.containsKey(key))
-	        {
-	        	//key only in that array if short response
-				Long i = Long.parseLong(valueString, 16);
-		        Float valueFloat = Float.intBitsToFloat(i.intValue());
-	        	dataStorage.addProperty("type", "short");
-	        	dataStorage.addProperty("magicNumber", key);
-	        	dataStorage.addProperty("value", valueFloat);
-	        	dataStorage.addProperty("text", Constants.keyDescriptionMapNumber.get(key));
-	        	dataStorage.addProperty("timestamp", Calendar.getInstance().getTimeInMillis() / 1000);
-	        	
-	        	boolean validValue = runSanityCheck(key, valueFloat);
-	        	
-	        	dataStorage.addProperty("sucess", validValue);
-	        	
-		        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
-		        Constants.magicNumberObjectMap.get(key).setDataReady(true);
-	        }
-	        else if(Constants.keyDescriptionMapArray.containsKey(key))
-	        {
-	        	JsonArray dataArray = new JsonArray();
-	        	
-	        	valueString = valueString.substring(8, valueString.length()); //The first 4 bytes are the requsted timestamp, not needed for the response
-	        	
-	        	int numberOfEntries = valueString.length() / 16;
-	        	
-	        	for(int i = 0; i < numberOfEntries; i++) 
-	        	{
-	        		String elementTimestamp = valueString.substring(16*i, 16*i+8); //timestamp given in seconds but need ms
-	        		String elementValue = valueString.substring(16*i+8, 16*i+16); 
-	        		long asLong = Long.parseLong(elementValue, 16);
-	        		int asInt = (int) asLong;
-	        		
-	        		Long currentDateLong = (Long.parseLong(elementTimestamp, 16)) * 1000;	//timestamp in seconds, but need to return in ms
-	        		Double valueFloat = Math.round(Float.intBitsToFloat(asInt) * 100.0) / 100.0;	//integer to float and rouding to 2 digits
-			        JsonObject dataEntry = new JsonObject();
-			        dataEntry.addProperty("timestamp", currentDateLong);
-			        dataEntry.addProperty("value", valueFloat);
-			        
-			        dataArray.add(dataEntry); 
-	        	}
-	        	
-	        	dataStorage.add("valueArray", dataArray);
-	        	dataStorage.addProperty("magicNumber", key);
-	        	dataStorage.addProperty("type", "long");
-	        	dataStorage.addProperty("text", Constants.keyDescriptionMapArray.get(key));
-		        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
-		        Constants.magicNumberObjectMap.get(key).setDataReady(true);
-	        }
-	        else if(Arrays.asList(Constants.unknownMagicNumbers).contains(key))
-	        {
-	        	logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains unknown magic number: " + key);
+			if(Constants.magicNumberObjectMap.containsKey(key))
+			{
+				logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString key listed: " + key);
+				if(Constants.magicNumberObjectMap.get(key).getDataType().equalsIgnoreCase("short"))
+				{
+					Long i = Long.parseLong(valueString, 16);
+			        Float valueFloat = Float.intBitsToFloat(i.intValue());
+		        	dataStorage.addProperty("type", "short");
+		        	dataStorage.addProperty("magicNumber", key);
+		        	dataStorage.addProperty("value", valueFloat);
+		        	dataStorage.addProperty("text", Constants.magicNumberObjectMap.get(key).getDescription());
+		        	dataStorage.addProperty("timestamp", Calendar.getInstance().getTimeInMillis() / 1000);
+		        	
+		        	boolean validValue = runSanityCheck(key, valueFloat);
+		        	
+		        	dataStorage.addProperty("sucess", validValue);
+		        	
+			        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
+			        Constants.magicNumberObjectMap.get(key).setDataReady(true);
+				}
+				else if(Constants.magicNumberObjectMap.get(key).getDataType().equalsIgnoreCase("long"))
+				{
+		        	JsonArray dataArray = new JsonArray();
+		        	
+		        	valueString = valueString.substring(8, valueString.length()); //The first 4 bytes are the requsted timestamp, not needed for the response
+		        	
+		        	int numberOfEntries = valueString.length() / 16;
+		        	
+		        	for(int i = 0; i < numberOfEntries; i++) 
+		        	{
+		        		String elementTimestamp = valueString.substring(16*i, 16*i+8); //timestamp given in seconds but need ms
+		        		String elementValue = valueString.substring(16*i+8, 16*i+16); 
+		        		long asLong = Long.parseLong(elementValue, 16);
+		        		int asInt = (int) asLong;
+		        		
+		        		Long currentDateLong = (Long.parseLong(elementTimestamp, 16)) * 1000;	//timestamp in seconds, but need to return in ms
+		        		Double valueFloat = Math.round(Float.intBitsToFloat(asInt) * 100.0) / 100.0;	//integer to float and rouding to 2 digits
+				        JsonObject dataEntry = new JsonObject();
+				        dataEntry.addProperty("timestamp", currentDateLong);
+				        dataEntry.addProperty("value", valueFloat);
+				        
+				        dataArray.add(dataEntry); 
+		        	}
+		        	
+		        	dataStorage.add("valueArray", dataArray);
+		        	dataStorage.addProperty("magicNumber", key);
+		        	dataStorage.addProperty("type", "long");
+		        	dataStorage.addProperty("text", Constants.magicNumberObjectMap.get(key).getDescription());
+			        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
+			        Constants.magicNumberObjectMap.get(key).setDataReady(true);
+				}
+				else if(Constants.magicNumberObjectMap.get(key).getDataType().equalsIgnoreCase("unknown"))	//to cover the case that we know that a magic number exists but we don't know its meaning
+				{
+		        	logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains unknown magic number: " + key);
+		        	dataStorage.addProperty("magicNumber", key);
+		        	dataStorage.addProperty("type", "unknown");
+			        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
+			        Constants.magicNumberObjectMap.get(key).setDataReady(true);
+				}
+				else if(Constants.magicNumberObjectMap.get(key).getDataType().equalsIgnoreCase("string"))
+				{
+		        	logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains magic number representing a string value not a number: " + key);
+		        	dataStorage.addProperty("magicNumber", key);
+		        	dataStorage.addProperty("type", "String");
+		        	dataStorage.addProperty("text", Constants.magicNumberObjectMap.get(key).getDescription());
+			        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
+			        Constants.magicNumberObjectMap.get(key).setDataReady(true);
+		        	//don't do anything, we know that this value is a string //TODO: Implement later
+				}
+			}
+			else
+			{
+				logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains unknown magic number (not listed in CSV): " + key);
 	        	dataStorage.addProperty("magicNumber", key);
 	        	dataStorage.addProperty("type", "unknown");
 		        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
 		        Constants.magicNumberObjectMap.get(key).setDataReady(true);
-	        }
-	        else if(Constants.keyDescriptionMapString.containsKey(key))
-	        {
-	        	logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains magic number representing a string value not a number: " + key);
-	        	dataStorage.addProperty("magicNumber", key);
-	        	dataStorage.addProperty("type", "String");
-	        	dataStorage.addProperty("text", Constants.keyDescriptionMapString.get(key));
-		        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
-		        Constants.magicNumberObjectMap.get(key).setDataReady(true);
-	        	//don't do anything, we know that this value is a string //TODO: Implement later
-	        }
-	        else
-	        {
-	        	logger.warn("<<<<< WARNING >>>>> Inverter::processResultString Key not found in any array listing the different types of keys. Key received: " + key);
-	        }
+			}	
 
 	        logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string is valid, json produced is: " + dataStorage);
 		}

@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Calendar;
 import java.util.Properties;
 import java.util.Timer;
 
@@ -19,8 +18,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.opensource.rct.model.MagicNumber;
 import com.opensource.rct.storage.Influxdb;
 import com.opensource.rct.timertasks.PollData;
@@ -30,9 +27,6 @@ import com.opensource.rct.timertasks.PollData;
  * @author JR
  * 
  * TODO: 
- * - einige Dinge werden auf Grund der magic Number im CSV erledigt andere auf Grund der Konstanten. Wenn was in den 
- *   Konstanten hinzugefügt wird aber nicht im CSV kann das zum mull pointer in der Inverter Klasse führen
- * - CSV von Platte einlesen und nicht nur vom jar
  * - requestData servlet returns result as plain/text, somehow returning as JSON object throws an exception. Has to be cleaned up one day.
  * - getData für Strings implementieren
  * - building request strings, does escaping change the length variable?
@@ -62,7 +56,7 @@ public class Application
 		
 		Inverter inverter = new Inverter();
 		inverter.connect();
-				
+	
 		if(!Constants.hostnameInfluxDb.trim().equalsIgnoreCase("") && Constants.hostnameInfluxDb != null)
 		{
 			if(Influxdb.initInfluxDB())
@@ -117,7 +111,7 @@ public class Application
 			Constants.port = Integer.valueOf(props.getProperty("portInverter", "8899"));
 			Constants.logLevel = (String) props.getProperty("logLevel", "error");
 			Constants.timeoutConverter = Long.valueOf(props.getProperty("timeoutConverter", "3000"));
-			Constants.hostnameInfluxDb = (String) props.getProperty("influxdbServer", "localhost");
+			Constants.hostnameInfluxDb = (String) props.getProperty("influxdbServer", ""); //empty influx DB parameter signals that no influx is being used, hence have no default value
 			Constants.portInfluxDb = Integer.valueOf(props.getProperty("influxdbPort", "8086"));
 			Constants.panelPower = Integer.valueOf(props.getProperty("panelPower", "0"));	//if zero then no settings made, check before usage
 			Constants.panelsA = Integer.valueOf(props.getProperty("panelsA", "0"));

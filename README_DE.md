@@ -22,10 +22,10 @@ Der minimale Inhalt der Datei sollte so aussehen:
 ```
 hostnameInverter = 1.1.1.1
 portInverter = 8899
-logLevel = debug
+logLevel = info
 timeoutInverter = 3000
 ```
-Achtung, ihr müsst auf jeden Fall den ersten Wert anpassen und dort die IP Adresse eures Wechselrichters eintragen. Eventuell müsst ihr auch noch den zweiten Parameter anpassen, 8899 ist der Standard-Port des Wechselrichters wenn euch also nicht bewusst ist dass ihr ihn geändert habt den Wert bitte so belassen.
+Achtung, ihr müsst auf jeden Fall den ersten Wert anpassen und dort die IP Adresse eures Wechselrichters eintragen. Eventuell müsst ihr auch noch den zweiten Parameter anpassen, 8899 ist der Standard-Port des Wechselrichters wenn euch also nicht bewusst ist dass ihr ihn geändert habt den Wert bitte so belassen. Der Parameter timeoutInverter beschreibt nach wievielen ms nicht mehr auf eine Antwort vom Wechselrichter wartet, aus unbekannten Gründen scheint der Wechselrichter nicht immer zu antworten, es kommt nur selten vor sollte aber den weiteren Ablauf nicht blockieren. Falls ihr im Log viele Timeout Meldungen seht könnte man den Wert etwas hoch drehen. Der Parameter logLevel benutzt die üblichen Werte. Am wichtigsten sind  _error_, _info_ und _debug_. Im produktiven Betrieb nutzt error, um anfänglich zu sehen was passiert info und bei Entwicklungsproblemen debug.
 
 Optional können noch die folgenden Parameter angegeben werden
 
