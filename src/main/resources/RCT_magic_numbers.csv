@@ -10,7 +10,7 @@ BD55905F;Eac - Energy today in Wh ;short;rctdb;
 C0CC81B6;Eac - Energy this year in Wh ;short;rctdb;
 B1EF67CE;Eac - Total energy in Wh ;short;rctdb;EnergyTotal
 DB2D69AE;Current AC power of inverter in W;short;rctdb;power
-959930BF;Battery state of charge (SoC);short;rctdb;soc
+959930BF;State of charge (SoC) 1st battery;short;rctdb;soc
 8B9FF008;Upper load boundary of battery in %;short;rctdb;
 400F015B;Battery power in W (positiv discharge negative charge);short;rctdb;PowerBattery
 E96F1844;External power (additional inverters/generators in house internal grid) in W;short;rctdb;
@@ -146,7 +146,7 @@ D166D94D;Actual date/time (int);short;rctdb;
 8EC4116E;Display blinking enable (bool);short;rctdb;
 9F52F968;Allow asymmetrical feed (bool);short;rctdb;
 3AFEF139;Thin-film solar module (bool);short;rctdb;
-B403A7E6;battery_placeholder[0].soc_update_since (float);short;rctdb;
+B403A7E6;Time since last SoC update [s] 2nd battery;short;rctdb;
 663F1452;power_mng.n_batteries (int);short;rctdb;
-8B4BE168;SOC (State of charge) (float);short;rctdb;
-4E04DD55;battery.soc_update_since (float);short;rctdb;
+8B4BE168;SOC (State of charge) 2nd battery (float);short;rctdb;
+4E04DD55;Time since last SoC update [s] 1st battery;short;rctdb;
