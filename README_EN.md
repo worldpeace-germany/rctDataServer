@@ -61,7 +61,7 @@ The server name and the server port have to be adjusted according to the Influx 
 
 ![Screenshot Grafana](images/Grafana_Screenshot.png)
 
-In the directory _Grafana_ you will find a Grafana dashboard which you can import to get started. If you want to create your own dashboards and share them with other users, then send them across and I will place them here on Github as well. The dashboard gets its data from a DataSource called InfluxDB, this DataSource has to be created manually in Grafana first, please use exactly this name. To import the dashboard into Grafana, click on the Home icon on the dashboard home screen and then select Import Dashboard from the menu.
+In the directory _Grafana_ you will find a Grafana dashboard which you can import to get started. If you want to create your own dashboards and share them with other users, then send them across and I will place them here on Github as well. The dashboard gets its data from a DataSource called InfluxDB, this DataSource has to be created manually in Grafana first, please use exactly this name. You need to specify as well a database name for this DataSource, please use rctdb. To import the dashboard into Grafana, click on the Home icon on the dashboard home screen and then select Import Dashboard from the menu.
 
 
 ## Technical test

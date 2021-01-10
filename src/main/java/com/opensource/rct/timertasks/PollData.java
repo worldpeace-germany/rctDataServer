@@ -105,7 +105,7 @@ public class PollData extends TimerTask{
 			if(startWaitTime + Constants.timeoutConverter < Calendar.getInstance().getTimeInMillis())
 			{
 				requestTimeOut = true;
-				logger.warn("<<<<< DEBUG >>>>> RequestData::getRctData timeout " + (Calendar.getInstance().getTimeInMillis() - startWaitTime));
+				logger.warn("<<<<< DEBUG >>>>> RequestData::getRctData " + magicNumber + " timeout " + (Calendar.getInstance().getTimeInMillis() - startWaitTime));
 			}	
 		}
 		

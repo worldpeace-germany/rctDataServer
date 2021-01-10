@@ -104,7 +104,7 @@ public class Inverter
 		} 
 		catch (IOException e) 
 		{
-			logger.error("<<<<< ERROR >>>>> Inverter::connect Cannot connect to inverter. Check hostname and port.");
+			logger.error("<<<<< ERROR >>>>> Inverter::connect Cannot connect to inverter. Check hostname " + Constants.hostname + " and port. " + Constants.port);
 			//TODO: implement reconnect if connection fails
 		}
 	}
@@ -153,6 +153,12 @@ public class Inverter
 	{
 		int splitStartPosition = 0;
 		List<String> resultList = new ArrayList<>();
+		
+		if(inputString.length() < 4)	//length must be even higher than 4 to have some useful content, just make sure that substring is not running into out of bounds
+		{
+			logger.debug("<<<<< DEBUG >>>>> Inverter::split2B Received TCP stream not valid, it is too short: " + inputString);
+			return null;
+		}
 
 		//Stream should always start with 2B, sometimes for unknown reasons it starts with 002B. Consider the rest as garbage.
 		if ((inputString.substring(0, 2).equalsIgnoreCase("2B")))	
@@ -165,7 +171,7 @@ public class Inverter
 		}
 		else
 		{
-			logger.warn("<<<<< WARNING >>>>> Inverter::split2B Received TCP stream not valid, it does not start with 2B nor 002B. " + inputString);
+			logger.debug("<<<<< DEBUG >>>>> Inverter::split2B Received TCP stream not valid, it does not start with 2B nor 002B. " + inputString);
 			return null;
 		}
 

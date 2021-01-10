@@ -61,7 +61,7 @@ Der Servername und der Serverport müssen gemäß der Influx Installation natür
 
 ![Screenshot Grafana](images/Grafana_Screenshot.png)
 
-Im Verzeichnis _Grafana_ findet ihr ein Grafana Dashboard welches ihr importieren könnt um einen Anfang zu haben. Solltet ihr eure eigenen Dashboards erstellen und diese mit anderen nutzern teilen wollen lege ich sie ebenfalls gerne hier ab. Das Dashboard holt seine Daten von einer DataSource namens InfluxDB, diese DataSource muss in Grafana zu erst manuell angelegt werden, bitte genau diesen Namen verwenden. Zum Import in Grafana auf dem Dashboard Home Screen auf das Home Icon oben links klicken und dann im Menu Import Dashboard auswählen.
+Im Verzeichnis _Grafana_ findet ihr ein Grafana Dashboard welches ihr importieren könnt um einen Anfang zu haben. Solltet ihr eure eigenen Dashboards erstellen und diese mit anderen Nutzern teilen wollen lege ich sie ebenfalls gerne hier ab. Das Dashboard holt seine Daten von einer DataSource namens InfluxDB, diese DataSource muss in Grafana zu erst manuell angelegt werden, bitte genau diesen Namen verwenden. Beim Anlegen der DataSource als Influx DB bitte den Namen rctdb verwenden. Zum Import in Grafana auf dem Dashboard Home Screen auf das Home Icon oben links klicken und dann im Menu Import Dashboard auswählen.
 
 ## Technischer Test
 Eine weitere Möglichkeit Daten abzurufen ist es über einen Browser bestimmte Werte abzufragen. Im wesentlichen ist das eine gute Möglichkeit zu testen ob die Anwendung grundsätzlich läuft. Ansonsten kann man diese http Schnittstelle auch nutzen wenn man die Daten in eigenen Anwendungen integrieren will.
