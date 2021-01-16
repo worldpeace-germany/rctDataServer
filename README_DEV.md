@@ -52,5 +52,5 @@ Another option is to request *all* data, make sure to understand *all* in this c
 ```
 GET http://<IP of server>:8080/getAllData
 ```
-Keep in mind as well the way the communication with the inverter takes place (see at the top of this guide). Since a response from the inverter is being sent to all connected clients it might happen that you see data in the getAllData call which you never have requested, but some other client (e.g. mobile app) might have done.
+As well keep in mind the way the communication with the inverter takes place (see at the top of this guide). Since a response from the inverter is being sent to all connected clients it might happen that you see data in the getAllData call which you never have requested, but some other client (e.g. mobile app) might have done.
 
