@@ -4,7 +4,7 @@ The tool is based on Spring Boot in order to have the easiest possible way to sp
 
 - reads in method *readConfiguration()* the config file which needs to be present
 - checks if Influx is configured in the configuration file, if it is a timer to poll data is set
-- reads the resource *RCT_magic_numbers.csv*  which configures how different magic numbers are dealt with
+- reads the resource *RCT_magic_numbers.csv*  which configures how different magic numbers are handled
 
 ## Communication
 The communication with the inverter has to take place via a TCP/IP stream, there is no high level interface available. This Java tool offers a high level interface to avoid digging into the low level specs of RCT. Every client, regardless if the RCT mobile app or this Java tool, opens a TCP/IP stream to the inverter. If one client requests a certain data set, then the response is being sent to _all_ connected clients.
