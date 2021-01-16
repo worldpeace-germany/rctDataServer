@@ -1,4 +1,4 @@
- # Introduction
+# Introduction
 
 The tool is based on Spring Boot in order to have the easiest possible way to spin up a web server. With a little bit of effort of course the Java classes could get separated and used for any other application server. The class _Application_ is the main class which is executed upon startup. It mainly does three things
 
