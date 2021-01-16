@@ -12,7 +12,7 @@ The communication with the inverter has to take place via a TCP/IP stream, there
 # Magic Numbers
 The communication with the inverter is happening with a list of magic  numbers. Each magic number represents a certain data set. When requesting the data for such a magic number the response can be either a single value (short response) or an array (long response), that solely depends on the magic number being requested for. A list of all magic numbers are listed in the resource file *RCT_magic_numbers.csv*. Please obey there might be more magic numbers which are unknown to the author of this tool. In fact you will find some magic numbers in that CSV which are marked as unknown. That means that these magic numbers have been observed, but their meaning is unknown. They are still listed for future enhancements and to reduce logging. If you find new magic numbers, known or unknown, please report them and I will add them here.
 
-Each entry in that CSV has the following format
+Each entry in the CSV has the following format
 ```
 <magic number>; <description>; <short/long>; <Influx DB>; <Influx key>
 ```
