@@ -101,7 +101,7 @@ public class Influxdb {
     					}
     					else
     					{
-    						logger.debug("<<<<< ERROR >>>>> Influxdb::initInfluxDB Creating database {} with URL {} returned {}", dbName, url, returnCode);
+    						logger.error("<<<<< ERROR >>>>> Influxdb::initInfluxDB Creating database {} with URL {} returned {}", dbName, url, returnCode);
     					}
     				}
     				catch(IOException e)

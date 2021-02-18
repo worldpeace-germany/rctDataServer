@@ -58,25 +58,34 @@ public class PollData extends TimerTask{
 	{
 		Socket inverterSocket = null;
 		DataOutputStream dOut = null;
+		
+		
 		try 
 		{
 			inverterSocket = new Socket(Constants.hostname, Constants.port);
 			dOut = new DataOutputStream(inverterSocket.getOutputStream());
 			dOut.write(inputByteArray);
 			dOut.flush();
-			logger.debug("<<<<< DEBUG >>>>> RequestData::getData Data has been requested from inverter.");
+			logger.debug("<<<<< DEBUG >>>>> PollData::sendRequestToInverter Data has been requested from inverter.");
 		} catch (IOException e) 
 		{
-			logger.error("<<<<< ERROR >>>>> RequestData::getData Cannot connect to inverter. Check hostname and port.");
+			logger.error("<<<<< ERROR >>>>> PollData::sendRequestToInverter Cannot connect to inverter. Check hostname and port.");
 		}
 		finally 
 		{
+			if(inverterSocket == null && dOut == null)
+			{
+				logger.debug("<<<<< ERROR >>>>> PollData::sendRequestToInverter Socket and stream are both null.");
+				return false;
+			}
+
 			try 
 			{
 				dOut.close();
 			} 
-			catch (IOException e) 
+			catch (Exception e) 
 			{
+				logger.error("<<<<< ERROR >>>>> PollData::sendRequestToInverter Cannot close data output stream." + e.getLocalizedMessage());
 			}
 			finally
 			{
@@ -84,31 +93,33 @@ public class PollData extends TimerTask{
 				{
 					inverterSocket.close();
 				} 
-				catch (IOException e) 
+				catch (Exception e) 
 				{
+					logger.error("<<<<< ERROR >>>>> PollData::sendRequestToInverter Cannot close TCP socket." + e.getMessage());
 				}	
 			}
 		}
 		
+		
 		Long startWaitTime = Calendar.getInstance().getTimeInMillis();
 		boolean requestTimeOut = false;
-			
+					
 		while(!Constants.magicNumberObjectMap.get(magicNumber).isDataReady() && !requestTimeOut)
 		{
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				logger.error("<<<<< ERROR >>>>> RequestData::getData Thread sleep interrupted.");
+				logger.error("<<<<< ERROR >>>>> PollData::getData Thread sleep interrupted.");
 				e.printStackTrace();
 			}
 			
 			if(startWaitTime + Constants.timeoutConverter < Calendar.getInstance().getTimeInMillis())
 			{
 				requestTimeOut = true;
-				logger.warn("<<<<< DEBUG >>>>> RequestData::getRctData " + magicNumber + " timeout " + (Calendar.getInstance().getTimeInMillis() - startWaitTime));
+				logger.warn("<<<<< WARN >>>>> PollData::getRctData " + magicNumber + " timeout " + (Calendar.getInstance().getTimeInMillis() - startWaitTime));
 			}	
 		}
-		
+				
 		if(requestTimeOut)
 		{
 			return false;
@@ -119,7 +130,7 @@ public class PollData extends TimerTask{
 		}
 		else
 		{	
-			logger.debug("<<<<< DEBUG >>>>> RequestData::getRctData Writing data to database. {}", Constants.magicNumberObjectMap.get(magicNumber).getDataJson().toString());
+			logger.debug("<<<<< DEBUG >>>>> PollData::getRctData Writing data to database. {}", Constants.magicNumberObjectMap.get(magicNumber).getDataJson().toString());
 			
 			return true;
 		}
