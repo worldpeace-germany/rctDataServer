@@ -426,11 +426,8 @@ public class Inverter
 			}
 			else
 			{
-				logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string contains unknown magic number (not listed in CSV): " + key);
-	        	dataStorage.addProperty("magicNumber", key);
-	        	dataStorage.addProperty("type", "unknown");
-		        Constants.magicNumberObjectMap.get(key).setDataJson(dataStorage);
-		        Constants.magicNumberObjectMap.get(key).setDataReady(true);
+				logger.warn("<<<<< DEBUG >>>>> Inverter::processResultString string contains unknown magic number (not listed in CSV): " + key);
+	        	//magic number is unknown so I cannot set any data in the JSON which contains the results since it is not contained in Constants.magicNumberObjectMap
 			}	
 
 	        logger.debug("<<<<< DEBUG >>>>> Inverter::processResultString string is valid, json produced is: " + dataStorage);

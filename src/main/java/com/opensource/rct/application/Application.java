@@ -52,6 +52,7 @@ public class Application
 		
 		createMagicNumberObjects();	//read master data from configuration file
 		
+		logger.info("<<<<< INFO >>>>> Application::Main: Working directory is " + System.getProperty("user.dir"));
 		logger.info("<<<<< INFO >>>>> Application::Main: RCT data server has been started. Going to connect to inverter...");
 		
 		Inverter inverter = new Inverter();

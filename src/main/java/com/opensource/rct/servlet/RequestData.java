@@ -52,12 +52,11 @@ public class RequestData {
     		if(!(magicNumber == null || magicNumber.equalsIgnoreCase("") ))
         	{
     			if(Constants.magicNumberObjectMap.containsKey(magicNumber))
-		    	//if(Constants.keyDescriptionMapNumber.containsKey(magicNumber))
 		        {
 		    		Constants.magicNumberObjectMap.get(magicNumber).setDataReady(false);
 		    		
 		    		if(Constants.magicNumberObjectMap.get(magicNumber).getDataType().equalsIgnoreCase("short"))
-		    		{
+    				{
 			    		requestBytes = Helper.buildRequestByteArrayDataLoggerShort(magicNumber);
 			    		sendRequestToInverter(requestBytes); //finally communicate with inverter
 		    		}
