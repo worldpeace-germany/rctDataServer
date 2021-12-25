@@ -50,6 +50,17 @@ public class Application
 		readConfiguration();
 		Configurator.setLevel("com.opensource.rct", Level.toLevel(Constants.logLevel));
 		
+		
+//		LoggerContext loggerCtx = (LoggerContext) LogManager.getContext(false);
+//		Configuration config = loggerCtx.getConfiguration();
+//		LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME); 
+//		loggerConfig.setLevel(Level.toLevel(Constants.logLevel));
+//		loggerCtx.updateLoggers();  // This causes all Loggers to refetch information from their
+//		
+//		
+		
+		//ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
+		
 		createMagicNumberObjects();	//read master data from configuration file
 		
 		logger.info("<<<<< INFO >>>>> Application::Main: Working directory is " + System.getProperty("user.dir"));
