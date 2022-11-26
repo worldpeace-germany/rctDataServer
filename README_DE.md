@@ -21,7 +21,7 @@ Eine Beispieldatei kann im Verzeichnis exampleFiles auf GitHub gefunden werden, 
 
 Der minimale Inhalt der Datei sollte so aussehen:
 
-```
+```ini
 hostnameInverter = 1.1.1.1
 portInverter = 8899
 logLevel = info
@@ -31,7 +31,7 @@ Achtung, ihr müsst auf jeden Fall den ersten Wert anpassen und dort die IP-Adre
 
 Standardmäßig werden die Logs in das aktuelle Verzeichnis in eine Datei rctPower.log geschrieben. Dieses Verhalten kann mit dem optionalen Parameter logFile überschrieben werden.
 
-```
+```ini
 logFile = /home/myuser/rctPower.log
 ```
 Der Parameter muss den kompletten Pfad und den Namen der Datei beinhalten. Falls Log-Informationen gelesen werden müssen, bevor die Log-Konfiguration gelesen wurde, dann sind diese Informationen im aktuellen Verzeichnis in der Datei rctPowerStartup.log enthalten. In den meisten Fällen wird diese Datei allerdings leer sein.
@@ -40,7 +40,7 @@ Die Konfiguration des log Files ist ab Release 0.1.5. möglich.
 
 Optional können noch die folgenden Parameter angegeben werden
 
-```
+```ini
 panelPower = 200
 panelsA = 10
 panelsB = 12
@@ -64,7 +64,7 @@ Es gibt diverse Möglichkeiten die Anwendung zu nutzen. Die einfachste Möglichk
 ## Influx Anbindung
 Hauptsächlich wurde das Tool gebaut um die Daten in einer Influx DB zu speichern. Die Daten der Influx DB können dann beispielsweise über Grafana (oder andere Anwendungen) ausgelesen und ausgewertet werden. Um die Anbindung an Influx zu realisieren müssen einfach nur die Verbindungsparameter in der obigen Konfigurationsdatei angegeben werden
 
-```
+```ini
 influxdbServer = localhost
 influxdbPort = 8086
 ```

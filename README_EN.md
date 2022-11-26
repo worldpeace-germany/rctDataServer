@@ -21,7 +21,7 @@ A sample config file can be found in the folder `exampleFiles` on GitHub. This s
 
 The minimal content of the file should look like this:
 
-```
+```ini
 hostnameInverter = 1.1.1.1
 portInverter = 8899
 logLevel = info
@@ -31,7 +31,7 @@ Attention, you have to adjust the first value and enter the IP address of your i
 
 By default, the system logs into the directory where the tool was started from into a file rctPower.log, but you can specify a log location with the optional parameter
 
-```
+```ini
 logFile = /home/myuser/rctPower.log
 ```
 Make sure to specify the full path and filename. If there is the need to see log information before the log config was read, then that information is held in the current directory in the file rctPowerStartup.log, in most cases this log file will be empty.
@@ -41,7 +41,7 @@ The log file configuration is possible since version 0.1.5.
 
 Optionally you can enter the following parameters
 
-```
+```ini
 panelPower = 200
 panelsA = 10
 panelsB = 12
@@ -65,7 +65,7 @@ There are several ways to use the application. The easiest way is via a browser
 ## Influx Connection
 Mainly the tool was built to store the data in an Influx DB. The data of the Influx DB can be used to be evaluated via Grafana (or other applications). To realize the connection to Influx you just have to set the connection parameters in the configuration file above
 
-```
+```ini
 influxdbServer = localhost
 influxdbPort = 8086
 ```
