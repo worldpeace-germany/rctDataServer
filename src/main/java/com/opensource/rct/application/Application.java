@@ -13,7 +13,14 @@ import java.util.Timer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
+import org.apache.logging.log4j.core.config.builder.api.LoggerComponentBuilder;
+import org.apache.logging.log4j.core.config.builder.api.RootLoggerComponentBuilder;
+import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -40,26 +47,55 @@ public class Application
 	private static Properties props;
 	private static Logger logger = LogManager.getLogger();
 	private static Timer timer = new Timer(true);
+	private static String storagePath;
 
 
 	public static void main(String[] args) throws Exception
 	{
 
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
+		
+		readConfiguration(); //reads as well config for the logger 
+		
+		/*
+		 * Setup Logging starts
+		 * log4j2.xml will be overwritten now, it is only being used initially when reading the configuration in case logging is needed
+		 * Startup issues will be logged to current directory in file rctPowerStartup.log
+		 * 
+		 * https://www.studytonight.com/post/log4j2-programmatic-configuration-in-java-class
+		 * */
+		
+		ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();		
+		builder.setStatusLevel(Level.toLevel(Constants.logLevel));		
+		builder.setConfigurationName("DefaultLogger");
+		
+		//console appender
+		AppenderComponentBuilder appenderBuilderConsole = builder.newAppender("Console", "CONSOLE").addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT);
+		appenderBuilderConsole.add(builder.newLayout("PatternLayout").addAttribute("pattern", "%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"));
+		
+		//file appender
+		AppenderComponentBuilder appenderBuilder = builder.newAppender("log", "File"); 
+		String logFile = Constants.logFile;
+		appenderBuilder.addAttribute("fileName", logFile);
+		appenderBuilder.add(builder.newLayout("PatternLayout").addAttribute("pattern", "%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"));
+		
+		LoggerComponentBuilder loggerBuild = builder.newLogger("com.opensource.rct", Level.toLevel(Constants.logLevel));
+		
+		RootLoggerComponentBuilder rootLogger = builder.newRootLogger(Level.DEBUG);
+		rootLogger.add(builder.newAppenderRef("Console"));
+		rootLogger.add(builder.newAppenderRef("log"));
 
-		readConfiguration();
-		Configurator.setLevel("com.opensource.rct", Level.toLevel(Constants.logLevel));
+		builder.add(appenderBuilder);
+		builder.add(appenderBuilderConsole);
+		builder.add(loggerBuild);
+		builder.add(rootLogger);
 		
+		//builder.writeXmlConfiguration(System.out); //to verify how a log4j2.xml would look like
+
+		Configurator.reconfigure(builder.build());
 		
-//		LoggerContext loggerCtx = (LoggerContext) LogManager.getContext(false);
-//		Configuration config = loggerCtx.getConfiguration();
-//		LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME); 
-//		loggerConfig.setLevel(Level.toLevel(Constants.logLevel));
-//		loggerCtx.updateLoggers();  // This causes all Loggers to refetch information from their
-//		
-//		
+		// Setup Logging ends
 		
-		//ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
 		
 		createMagicNumberObjects();	//read master data from configuration file
 		
@@ -90,7 +126,7 @@ public class Application
 	static void readConfiguration()
 	{
 		props = new Properties();
-		String storagePath = System.getProperty("user.home");	// Store config data in users app config directoy, location depends on platform
+		storagePath = System.getProperty("user.home");	// Store config data in users app config directoy, location depends on platform
 		String osName = System.getProperty("os.name");
 		
 		if(osName.toLowerCase().indexOf("win") > -1 )
@@ -121,13 +157,14 @@ public class Application
 			
 			Constants.hostname = (String) props.getProperty("hostnameInverter", "");
 			Constants.port = Integer.valueOf(props.getProperty("portInverter", "8899"));
-			Constants.logLevel = (String) props.getProperty("logLevel", "error");
+			Constants.logLevel = (String) props.getProperty("logLevel", "error"); //if property value in config file is invalid, log4j2 uses debug as default
 			Constants.timeoutConverter = Long.valueOf(props.getProperty("timeoutConverter", "3000"));
 			Constants.hostnameInfluxDb = (String) props.getProperty("influxdbServer", ""); //empty influx DB parameter signals that no influx is being used, hence have no default value
 			Constants.portInfluxDb = Integer.valueOf(props.getProperty("influxdbPort", "8086"));
 			Constants.panelPower = Integer.valueOf(props.getProperty("panelPower", "0"));	//if zero then no settings made, check before usage
 			Constants.panelsA = Integer.valueOf(props.getProperty("panelsA", "0"));
 			Constants.panelsB = Integer.valueOf(props.getProperty("panelsB", "0"));
+			Constants.logFile = (String) props.getProperty("logFile", "rctPower.log");
 			
 			fis.close();
 		}
@@ -146,7 +183,27 @@ public class Application
 
 	static void createMagicNumberObjects()
 	{
-		 InputStream is = com.opensource.rct.application.Application.class.getResourceAsStream("/RCT_magic_numbers.csv");
+		
+		File file = new File( storagePath + "RCT_magic_numbers.csv");
+		InputStream is = null;
+
+		if(file.exists() && !file.isDirectory()) 
+		{ 
+			try 
+			{
+				is = new FileInputStream(file);
+				logger.info("<<<<< INFO >>>>> Application::createMagicNumberObjects: external config file found, using this one.");
+			} catch (FileNotFoundException e) 
+			{
+				logger.error("<<<<< ERROR >>>>> Application::createMagicNumberObjects Config file RCT_magic_numbers.csv.properties not found in " + storagePath);
+			}
+		}
+		else 
+		{
+			logger.info("<<<<< INFO >>>>> Application::createMagicNumberObjects: external config file not found, using config file in jar file.");
+			is = com.opensource.rct.application.Application.class.getResourceAsStream("/RCT_magic_numbers.csv");
+		}
+
 		 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		 String line = null;
 		 

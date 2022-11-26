@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensource.rct.model.MagicNumber;
 
 /**
@@ -24,6 +26,7 @@ public class Constants
 	public static int portInfluxDb = 8086;
 	
 	public static String logLevel = "error"; 
+	public static String logFile = "";
 	
 	public static int panelPower = 0;
 	public static int panelsA = 0;

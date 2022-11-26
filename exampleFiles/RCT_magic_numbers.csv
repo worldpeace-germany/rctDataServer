@@ -1,0 +1,154 @@
+1AC87AA0;Current house power usage in W;short;rctdb;PowerHouse
+91617C58;Public grid power in W negativ if feed in;short;rctdb;PowerGrid
+DB11855B;DC input power A in W;short;rctdb;PowerDcInput
+0CB5D21B;DC input power B in W;short;rctdb;PowerDcInput
+B55BA2CE;DC input voltage A in V;short;rctdb;voltage
+B0041187;DC input voltage B in V;short;rctdb;voltage
+A7FA5C5D;Battery voltage in V;short;rctdb;voltage
+BD55905F;Eac - Energy today in Wh ;short;rctdb;
+10970E9D;Eac - Energy this month in Wh;short;rctdb;
+C0CC81B6;Eac - Energy this year in Wh ;short;rctdb;
+B1EF67CE;Eac - Total energy in Wh ;short;rctdb;EnergyTotal
+DB2D69AE;Current AC power of inverter in W;short;rctdb;power
+959930BF;State of charge (SoC) 1st battery;short;rctdb;soc
+8B9FF008;Upper load boundary of battery in %;short;rctdb;
+400F015B;Battery power in W (positiv discharge negative charge);short;rctdb;PowerBattery
+E96F1844;External power (additional inverters/generators in house internal grid) in W;short;rctdb;
+CF053085;Phase L1 Voltage in V;short;rctdb;voltage
+54B4684E;Phase L2 Voltage in V;short;rctdb;voltage
+2545E22D;Phase L3 Voltage in V;short;rctdb;voltage
+B408E40A;Battery current measured by inverter, low pass filter with Tau = 1s in A;short;rctdb;
+902AFAFB;Battery temperature in C;short;rctdb;
+2AE703F2;Energy today in Wh input A;short;rctdb;EnergyTodayA
+FBF3CE97;Energy today in Wh input B;short;rctdb;EnergyTodayB
+3C87C4F5;Energy feed into public grid today in Wh;short;rctdb;EnergyGridFeedToday
+867DEF7D;Energy taken from public grid today in Wh;short;rctdb;EnergyGridReceivedToday
+2F3C1D7D;Energy used today in Wh;short;rctdb;EnergyUsedToday
+81AE960B;Energy this month input A in Wh;short;rctdb;EnergyCurrentMonthA
+7AB9B045;Energy this month input B in Wh;short;rctdb;EnergyCurrentMonthB
+65B624AB;Energy feed into public grid this month in Wh;short;rctdb;EnergyGridFeedThisMonth
+126ABC86;Energy taken from public grid this month in Wh;short;rctdb;EnergyGridReceivedThisMonth
+F0BE6429;Energy used this month in Wh;short;rctdb;EnergyUsedThisMonth
+AF64D0FE;Energy this year input A in Wh;short;rctdb;EnergyCurrentYearA
+BD55D796;Energy this year input B in Wh;short;rctdb;EnergyCurrentYearB
+26EFFC2F;Energy feed into public grid this year in Wh;short;rctdb;EnergyGridFeedThisYear
+DE17F021;Energy taken from public grid this year in Wh;short;rctdb;EnergyGridReceivedThisYear
+C7D3B479;Energy used this year in Wh;short;rctdb;EnergyUsedThisYear
+FC724A9E;Energy total input A in Wh;short;rctdb;
+68EEFD3D;Energy total input B in Wh;short;rctdb;
+44D4C533;Energy feed into public grid total in Wh;short;rctdb;EnergyGridFeedTotal
+62FBE7DC;Energy taken from public grid total in Wh;short;rctdb;EnergyGridReceivedTotal
+EFF4B537;Energy used total in Wh;short;rctdb;EnergyUsedTotal
+FE1AA500;External Power Limit;short;rctdb;
+BD008E29;External Battery power target in W positive is discharge;short;rctdb;power
+872F380B;External load demand in W positive is feed in  0 is internal;short;rctdb;power
+4BC0F974;gross battery capacity kWh;short;rctdb;
+37F9D5CA;Bit coded fault word 0;short;rctdb;
+234B4736;Bit coded fault word 1;short;rctdb;
+3B7FCD47;Bit coded fault word 2;short;rctdb;
+7F813D73;Bit coded fault word 3;short;rctdb;
+8FC89B10;Service Variable;short;rctdb;
+1C4A665F;Public grid frequency in Hz;short;rctdb;
+63476DBE;Public grid phase to phase L1-L2 voltage [V];short;rctdb;
+485AD749;Public grid phase to phase L2-L3 voltage [V];short;rctdb;
+F25C339B;Public grid phase to phase L3-L1 voltage [V];short;rctdb;
+C717D1FB;Total system insulation in Ohm;short;rctdb;
+5F33284E;Inverter actual state;short;rctdb;
+9D785E8C;Battery BMS main software version;short;rctdb;
+1B39A3A3;Battery BMS power software version;short;rctdb;
+6388556C;Battery stack 0 software version;short;rctdb;
+A54C4685;Battery stack 1 software version;short;rctdb;
+C8BA1729;Battery stack 2 software version;short;rctdb;
+086C75B0;Battery stack 3 software version;short;rctdb;
+A40906BF;Battery stack 4 software version;short;rctdb;
+EEA3F59B;Battery stack 5 software version;short;rctdb;
+6974798A;Battery stack 6 software version;short;rctdb;
+EBC62737;Inverter discription;string;rctdb;
+7924ABD9;Inverter serial number;string;rctdb;
+68BC034D;Actual Norm;string;rctdb;
+DDD1C2D0;Inverter software version;string;rctdb;
+16A1F844;Battery BMS serial number;string;rctdb;
+FBF6D834;Battery stack 0 serial number;string;rctdb;
+99396810;Battery stack 1 serial number;string;rctdb;
+73489528;Battery stack 2 serial number;string;rctdb;
+257B7612;Battery stack 3 serial number;string;rctdb;
+4E699086;Battery stack 4 serial number;string;rctdb;
+162491E8;Battery stack 5 serial number;string;rctdb;
+5939EC5D;Battery stack 6 serial number;string;rctdb;
+3623D82A;Grid-separated;short;rctdb;
+DC667958;Battery state machine;short;rctdb;
+36A9E9A6;Utilize external Inverter energy. [True/False];short;rctdb;
+701A0482;Solar generator A connected [True/False];short;rctdb;
+FED51BD2;Solar generator B connected [True/False];short;rctdb;
+99EE89CB;Power limit source (enum);short;rctdb;
+70A2AF4F;battery.bat_status (int);short;rctdb;
+5B10CE81;HeiPhoss mode (int);short;rctdb;
+682CDDA1;Battery type (enum);short;rctdb;
+97E203F9;power_mng.is_grid (bool);short;rctdb;
+4E3CB7F8;3-phase feed in (bool);short;rctdb;
+437B8122;Power Switch is available (bool);short;rctdb;
+B20D1AD6;Daily grid feed energy (Egrid feed) [Wh];long;rctdb;
+05C7CFB1;Daily grid load energy (Egrid load) [Wh];long;rctdb;
+FCF4E78D;Daily energy on DC input A (Edc A) [Wh];long;rctdb;
+0DF164DE;Daily energy on DC input B (Edc B) [Wh];long;rctdb;
+60A9A532;Daily external energy (Eext) [Wh];long;rctdb;
+CA6D6472;Daily haushold energy (Eload) [Wh];long;rctdb;
+E04C3900;Daily energy on AC output (Eac) [Wh];long;rctdb;
+921997EE;Monthly grid feed energy (Egrid feed) [Wh];long;rctdb;
+5D34D09D;Monthly grid load energy (Egrid load) [Wh] ;long;rctdb;
+2F0A6B15;Monthly energy on DC input A (Edc A) [Wh];long;rctdb;
+6B5A56C2;Monthly energy on DC input B (Edc B) [Wh] ;long;rctdb;
+E4DC040A;Monthly external energy (Eext) [Wh];long;rctdb;
+431509D1;Monthly haushold energy (Eload) [Wh];long;rctdb;
+F28341E2;Monthly energy on AC output (Eac) [Wh];long;rctdb;
+19B814F2;Yearly grid feed energy (Egrid feed) [Wh];long;rctdb;
+C55EF32E;Yearly grid load energy (Egrid load) [Wh] ;long;rctdb;
+4C14CC7C;Yearly energy on DC input A (Edc A) [Wh];long;rctdb;
+34ECA9CA;Yearly energy on DC input B (Edc B) [Wh] ;long;rctdb;
+4E9D95A6;Yearly external energy (Eext) [Wh];long;rctdb;
+E5FBCC6F;Yearly haushold energy (Eload) [Wh];long;rctdb;
+70BD7C46;Yearly energy on AC output (Eac) [Wh];long;rctdb;
+A60082A9;5-minute grid feed energy (Egrid feed) [Wh];long;rctdb;
+9247DB99;5-minute grid load energy (Egrid load) [Wh] ;long;rctdb;
+50B441C1;5-minute energy on DC input A (Edc A) [Wh];long;rctdb;
+1D49380A;5-minute energy on DC input B (Edc B) [Wh] ;long;rctdb;
+3906A1D0;5-minute external energy (Eext) [Wh];long;rctdb;
+A7C708EB;5-minute haushold energy (Eload) [Wh];long;rctdb;
+669D02FE;5-minute energy on AC output (Eac) [Wh];long;rctdb;
+5293B668;5-minute value SoC;long;rctdb;
+76C9A0BD;5-minute target value SoC;long;rctdb;
+D3E94E6B;5-minute Last known battery temperature BMS sent (Tempbat) [C];long;rctdb;
+132AA71E;5-minute Last known heat sink temperature close to the battery boost transistors (Temp2) [C];long;rctdb;
+064E4340;5-minute Average battery voltage (Ubat) [V];long;rctdb;
+5411CE1B;5-minute Average RMS voltage on phase 1 (UL1) [V];long;rctdb;
+488052BA;5-minute Average RMS voltage on phase 2 (UL2) [V];long;rctdb;
+095AFAA8;5-minute Average RMS voltage on phase 3 (UL3) [V];long;rctdb;
+72ACC0BF;5-minute Average voltage on DC input A [V];long;rctdb;
+0FA29566;5-minute Average voltage on DC input B [V];long;rctdb;
+CBDAD315;5-minute Energy on battery terminal (Ebat) [Wh];long;rctdb;
+21879805;5-minute Energy on AC phase 1 output (Eac1) [Wh];long;rctdb;
+554D8FEE;5-minute Energy on AC phase 2 output (Eac1) [Wh];long;rctdb;
+E29C24EB;5-minute Energy on AC phase 3 output (Eac1) [Wh];long;rctdb;
+5E540FB2;Activate aut. update slaves (bool);short;rctdb;
+BF9B6042;Control software factory version;string;rctdb;
+7DA7D8B6;PIC software version (int);short;rctdb;
+6279F2A3;PIC bootloader software version (int);short;rctdb;
+96E32D11;Erase cycles of flash parameter (int);short;rctdb;
+7301A5A7;Production date (int);short;rctdb;
+DD90A328;Last update date (int);short;rctdb;
+46892579;Write cycles of flash parameters (int);short;rctdb;
+F247BB16;Display contrast (int);short;rctdb;
+29BDA75F;Display brightness (int);short;rctdb;
+F473BC5E;Max. allowed grid feed-in power [W] (float);short;rctdb;
+D166D94D;Actual date/time (int);short;rctdb;
+3903A5E9;Automatically adjust clock for daylight saving time (bool);short;rctdb;
+67BF3003;Rotate display (bool);short;rctdb;
+8EC4116E;Display blinking enable (bool);short;rctdb;
+9F52F968;Allow asymmetrical feed (bool);short;rctdb;
+3AFEF139;Thin-film solar module (bool);short;rctdb;
+B403A7E6;Time since last SoC update [s] 2nd battery;short;rctdb;
+663F1452;power_mng.n_batteries (int);short;rctdb;
+8B4BE168;SOC (State of charge) 2nd battery (float);short;rctdb;
+4E04DD55;Time since last SoC update [s] 1st battery;short;rctdb;
+F79D41D9;Heat sink temperature [C];short;rctdb;
+B84A38AB;Battery SoC target high;short;rctdb;
